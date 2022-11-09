@@ -62,6 +62,7 @@ export type ResponsiveTableProps<TRow, TCol> = {
   expectedLength?: number;
   onRowClick?: (props: RowProps<TRow>) => void;
   setActionCellOuiaId?: (props: RowProps<TRow>) => string;
+  setRowKey?: (props: RowProps<TRow>) => string | undefined;
   setRowOuiaId?: (props: RowProps<TRow>) => string;
   tableOuiaId?: string;
 };
@@ -82,6 +83,7 @@ export const ResponsiveTable = <TRow, TCol>({
   expectedLength = 3,
   onRowClick,
   setActionCellOuiaId,
+  setRowKey,
   setRowOuiaId,
   tableOuiaId,
   children,
@@ -236,7 +238,7 @@ export const ResponsiveTable = <TRow, TCol>({
           );
           return (
             <DeletableRow
-              key={`row_${rowIndex}`}
+              key={setRowKey?.({ row, rowIndex }) ?? `row_${rowIndex}`}
               isDeleted={deleted}
               isSelected={selected}
               onClick={onClick}
